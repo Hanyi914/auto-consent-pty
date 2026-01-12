@@ -34,6 +34,24 @@ python3 auto_consent_pty.py --multi -- claude
 - Strips ANSI codes before matching; keeps only the latest 8KB of text.
 - Single-shot by default; `--multi` keeps scanning after the first auto-enter.
 
+## Testing
+
+Run the pattern detection tests to verify all consent dialogs are recognized:
+
+```bash
+# Run all tests with verbose output
+python3 test_patterns.py
+
+# Quiet mode (exit code only, for CI)
+python3 test_patterns.py -q
+```
+
+Test coverage includes:
+- Standard Claude MCP dialogs
+- Chinese authorization dialogs (是否授权我使用/创建)
+- Various hint patterns (Esc to cancel, Tab to add instructions, etc.)
+- Negative cases to prevent false positives
+
 ## Notes
 - Requires an interactive TTY (run directly in Warp tab).
 - All input stays inside the PTY of the wrapped process; other tabs are untouched.
